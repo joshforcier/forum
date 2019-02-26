@@ -1,13 +1,13 @@
 <template>
-    <div class="thread">
+    <div v-if="thread && user" class="thread">
         <div>
             <p>
-                <router-link :to="{name: 'PageThreadShow', params: {id: thread['.key']}}">
+                <router-link :to="{name: 'ThreadShow', params: {id: thread['.key']}}">
                     {{thread.title}}
                 </router-link>
             </p>
             <p class="text-faded text-xsmall">
-                By <a href="#">{{user.name}}</a>, {{thread.publishedAt}}.
+                By <a href="#">{{user.name}}</a>, <AppDate :timestamp="thread.publishedAt"/>.
             </p>
         </div>
 
@@ -20,7 +20,6 @@
 </template>
 
 <script>
-    import sourceData from '@/data'
     export default {
         props: {
             thread: {
@@ -30,10 +29,10 @@
         },
         computed: {
             repliesCount () {
-                return Object.keys(this.thread.posts).length - 1;
+                return this.$store.getters['threads/threadRepliesCount'](this.thread['.key'])
             },
             user () {
-                return sourceData.users[this.thread.userId];
+                return this.$store.state.users.items[this.thread.userId]
             }
         }
     }

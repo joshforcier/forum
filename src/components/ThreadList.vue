@@ -15,7 +15,6 @@
         components: {
             ThreadListItem
         },
-
         props: {
             threads: {
                 required: true,
@@ -24,7 +23,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>
