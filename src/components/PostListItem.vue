@@ -23,7 +23,6 @@
 <script>
    // import PostEditor from './PostEditor'
     import sourceData from '@/data'
-    import AppDate from './AppDate'
 
     export default {
         props: {
@@ -32,9 +31,7 @@
                 type: Object
             }
         },
-        components: {
-            AppDate
-        },
+
         data () {
             return {
                 editing: false
