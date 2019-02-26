@@ -20,7 +20,12 @@
 </template>
 
 <script>
+    import sourceData from '@/data'
+    import AppDate from './AppDate'
     export default {
+        components: {
+            AppDate
+        },
         props: {
             thread: {
                 required: true,
@@ -29,10 +34,9 @@
         },
         computed: {
             repliesCount () {
-                return this.$store.getters['threads/threadRepliesCount'](this.thread['.key'])
-            },
+                return Object.keys(this.thread.posts).length - 1            },
             user () {
-                return this.$store.state.users.items[this.thread.userId]
+                return sourceData.users[this.thread.userId]
             }
         }
     }
