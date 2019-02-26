@@ -22,7 +22,6 @@
 
 <script>
    // import PostEditor from './PostEditor'
-    import sourceData from '@/data'
 
     export default {
         props: {
@@ -40,7 +39,7 @@
 
         computed: {
             user () {
-                return sourceData.users[this.post.userId]
+                return this.$store.state.users[this.post.userId]
             },
             userPostsCount () {
                 return Object.keys(this.user.posts).length
