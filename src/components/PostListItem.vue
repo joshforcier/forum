@@ -21,39 +21,39 @@
 </template>
 
 <script>
-   // import PostEditor from './PostEditor'
+    import {countObjectProperties} from '@/helpers'
 
     export default {
         props: {
             post: {
                 required: true,
-                type: Object
-            }
+                type: Object,
+            },
         },
 
         data () {
             return {
-                editing: false
+                editing: false,
             }
         },
 
         computed: {
             user () {
-                return this.$store.state.users[this.post.userId]
+                return this.$store.state.users[this.post.userId];
             },
             userPostsCount () {
-                return Object.keys(this.user.posts).length
-            }
+                return countObjectProperties(this.user.posts);
+            },
         },
 
         filters: {
             humanFriendlyDate(date) {
-                return moment.unix(date).format('MMMM Do YYYY, h:mm:ss a')
+                return moment.unix(date).format('MMMM Do YYYY, h:mm:ss a');
             },
             diffForHumans(date) {
-                return moment.unix(date).fromNow()
-            }
-        }
+                return moment.unix(date).fromNow();
+            },
+        },
     }
 </script>
 

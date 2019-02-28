@@ -38,14 +38,14 @@
                 <!--</li>-->
 
                 <li class="navbar-user">
-                    <a href="#">
-                        <img class="avatar-small" src="../assets/img/download.jpg"
-                             alt="">
+                    <router-link :to="{name: 'Profile'}">
+                        <img class="avatar-small" v-bind:src="user.avatar" alt="">
                         <span>
-                Josh Forcier
-                <img class="icon-profile" src="../assets/img/arrow-profile.svg" alt="">
-            </span>
-                    </a>
+                            {{user.name}}
+                            <img class="icon-profile" src="../assets/img/arrow-profile.svg" alt="">
+                        </span>
+                    </router-link>
+
                     <!-- dropdown menu -->
                     <!-- add class "active-drop" to show the dropdown -->
                     <div id="user-dropdown">
@@ -62,7 +62,14 @@
 </template>
 
 <script>
-    export default {}
+    import {mapGetters} from 'vuex'
+    export default {
+        computed: {
+            ...mapGetters({
+                'user': 'authUser'
+            })
+        },
+    }
 </script>
 
 <style scoped>
