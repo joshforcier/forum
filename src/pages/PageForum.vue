@@ -6,7 +6,13 @@
                     <h1>{{forum.name}}</h1>
                     <p class="text-lead">{{forum.description}}</p>
                 </div>
-                <a href="new-thread.html" class="btn-green btn-small">Start a thread</a>
+
+                <router-link
+                    :to="{name: 'ThreadCreate', params: {forumId: this.forum['.key']}}"
+                    class="btn-green btn-small"
+                >
+                    Start a thread
+                </router-link>
             </div>
         </div>
 
@@ -21,23 +27,26 @@
 
     export default {
         components: {
-            ThreadList
+            ThreadList,
         },
+
         props: {
             id: {
                 required: true,
-                type: String
-            }
+                type: String,
+            },
         },
+
         computed: {
             forum () {
-                return this.$store.state.forums[this.id]
+                return this.$store.state.forums[this.id];
             },
+
             threads () {
                 return Object.values(this.$store.state.threads)
-                    .filter(thread => thread.forumId === this.id)
-            }
-        }
+                    .filter(thread => thread.forumId === this.id);
+            },
+        },
     }
 </script>
 
