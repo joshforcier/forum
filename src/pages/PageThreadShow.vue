@@ -19,30 +19,27 @@
     export default {
         components: {
             PostList,
-            PostEditor
+            PostEditor,
         },
 
         props: {
             id: {
                 required: true,
-                type: String
-            }
-        },
-
-        data () {
-            return {
-                thread: this.$store.state.threads[this.id],
-                newPostText: ''
-            }
+                type: String,
+            },
         },
 
         computed: {
+            thread () {
+                return this.$store.state.threads[this.id];
+            },
+
             posts () {
                 const postIds = Object.values(this.thread.posts);
                 return Object.values(this.$store.state.posts)
                     .filter(post => postIds.includes(post['.key']));
-            }
-        }
+            },
+        },
     }
 </script>
 
