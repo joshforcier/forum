@@ -1,7 +1,9 @@
 <template>
     <div class="col-full push-top">
-        <h1>Create new thread in <i>{{forum.name}}</i></h1>
+        <h1>Editing<i>{{thread.title}}</i></h1>
         <ThreadEditor
+            :title="thread.title"
+            :text="text"
             @save="save"
             @cancel="cancel"
         />
@@ -16,33 +18,37 @@
         },
 
         props: {
-            forumId: {
+            id: {
                 type: String,
                 required: true,
             },
         },
 
         computed: {
-            forum () {
-                return this.$store.state.forums[this.forumId];
+            thread () {
+                return this.$store.state.threads[this.id];
+            },
+
+            text () {
+                return this.$store.state.posts[this.thread.firstPostId].text;
             },
         },
 
         methods: {
             save ({title, text}) {
-                this.$store.dispatch('createThread', {
-                    forumId: this.forum['.key'],
+                this.$store.dispatch('updateThread', {
+                    id: this.id,
                     title,
                     text,
                 }).then(thread => {
-                    // redirect to new thread after publishing
-                    this.$router.push({name: 'ThreadShow', params: {id: thread['.key']}});
+                    // redirect to thread after saving
+                    this.$router.push({name: 'ThreadShow', params: {id: this.id}});
                 });
             },
 
             cancel () {
                 // redirect to forum on cancel
-                this.$router.push({name: 'Forum', params: {id: this.forum['.key']}});
+                this.$router.push({name: 'ThreadShow', params: {id: this.id}});
             },
         },
     }
