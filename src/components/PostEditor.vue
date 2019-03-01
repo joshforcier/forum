@@ -26,6 +26,12 @@
 
             post: {
                 type: Object,
+                validator: obj => {
+                    const keyIsValid = typeof obj['.key'] === 'string';
+                    const textIsValid = typeof obj.text === 'string';
+
+                    return keyIsValid && textIsValid;
+                },
             },
         },
 
@@ -38,15 +44,15 @@
         computed: {
             isUpdate() {
                 return !!this.post;
-            }
+            },
         },
 
         methods: {
             save () {
                 this.persist()
                     .then(post => {
-                        this.$emit('save', {post});
-                    });
+                        this.$emit('save', {post})
+                    })
             },
 
             cancel () {

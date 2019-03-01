@@ -25,13 +25,13 @@
         </div>
 
         <div class="post-date text-faded">
+            <div v-if="post.edited" class="edition-info">Edited</div>
             <AppDate :timestamp="post.publishedAt"/>
         </div>
     </div>
 </template>
 
 <script>
-    import {countObjectProperties} from '@/helpers'
     import PostEditor from '@/components/PostEditor'
 
     export default {
@@ -56,8 +56,9 @@
             user () {
                 return this.$store.state.users[this.post.userId];
             },
+
             userPostsCount () {
-                return countObjectProperties(this.user.posts);
+                return this.$store.getters.userPostsCount(this.post.userId);
             },
         },
 
