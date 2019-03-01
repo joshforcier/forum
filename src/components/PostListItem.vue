@@ -9,8 +9,18 @@
         </div>
 
         <div class="post-content">
-            <div>
-                {{post.text}}
+            <template v-if="!editing">
+                <div>
+                    {{post.text}}
+                </div>
+                <a @click.prevent="editing = true" href="#" style="margin-left: auto;" class="link-unstyled" title="Edit post"><i class="fa fa-pencil"></i></a>
+            </template>
+            <div v-else>
+                <PostEditor
+                    :post="post"
+                    @save="editing = false"
+                    @cancel="editing = false"
+                />
             </div>
         </div>
 
@@ -22,6 +32,7 @@
 
 <script>
     import {countObjectProperties} from '@/helpers'
+    import PostEditor from '@/components/PostEditor'
 
     export default {
         props: {
@@ -29,6 +40,10 @@
                 required: true,
                 type: Object,
             },
+        },
+
+        components: {
+            PostEditor,
         },
 
         data () {
